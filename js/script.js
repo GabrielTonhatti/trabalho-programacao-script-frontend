@@ -2,7 +2,7 @@ import * as api from "./api/api.js";
 
 const tableBody = document.querySelector(".table-body");
 const formCadastrar = document.querySelector("#form-cadastrar");
-const formAtualizar = document.querySelector("#botao-atualizar");
+const formAtualizar = document.querySelector("#form-atualizar");
 const buttonsModalDelete = document.querySelector(".botoes");
 
 const criarLinhasTabela = (empregado) => {
@@ -39,37 +39,30 @@ const adicionarEventos = () => {
         );
 
         buttonUpdate.addEventListener("click", () => {
+            const idModal = document.querySelector("#id-atualizar");
             const nomeModal = document.querySelector("#nome-atualizar");
             const funcaoModal = document.querySelector("#funcao-atualizar");
             const salarioModal = document.querySelector("#salario-atualizar");
 
+            idModal.value = id;
             nomeModal.value = nome;
             funcaoModal.value = funcao;
             salarioModal.value = salario.replace("R$ ", "").replace(",", ".");
-
-            // const empregado = {
-            //     nome,
-            //     funcao,
-            //     salario: Number(salarioModal.value),
-            // };
-
-            // document
-            //     .querySelector("#botao-atualizar")
-            //     .addEventListener("click", (event) => {
-            //         update(event, id, empregado);
-            //     });
         });
 
         buttonDelete.addEventListener("click", () => {
             buttonsModalDelete.innerHTML = `
-                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
+                <button class="btn btn-danger" type="button" data-bs-dismiss="modal" id="cancelar-excluir">Cancelar</button>
                 <button class="btn btn-warning" id="excluir-${id}" type="submit">Excluir</button>
             `;
 
+            const botaoCancelar = document.getElementById("cancelar-excluir");
             document
                 .querySelector(`#excluir-${id}`)
-                .addEventListener("click", () => {
+                .addEventListener("click", (event) => {
+                    event.preventDefault();
                     deleteById(id);
+                    botaoCancelar.click();
                 });
         });
     });
@@ -88,14 +81,16 @@ const findAll = async () => {
 
 const save = async (event) => {
     try {
-        const nome = document.querySelector("#nome").value;
-        const funcao = document.querySelector("#funcao").value;
-        const salario = Number(document.querySelector("#salario").value);
+        event.preventDefault();
+        const nome = document.querySelector("#nome");
+        const funcao = document.querySelector("#funcao");
+        const salario =document.querySelector("#salario");
+        const fechar = document.querySelector("#fechar");
 
         const empregado = {
-            nome,
-            funcao,
-            salario,
+            nome: nome.value,
+            funcao: funcao.value,
+            salario:  Number(salario.value),
         };
 
         if (!formCadastrar.checkValidity() && salario == 0) {
@@ -106,6 +101,10 @@ const save = async (event) => {
         } else {
             await api.save(empregado);
             await findAll();
+            nome.value = "";
+            funcao.value = "";
+            salario.value = "";
+            fechar.click();
         }
     } catch (error) {
         console.log("error", error);
@@ -114,12 +113,14 @@ const save = async (event) => {
 
 const update = async (event) => {
     try {
+        event.preventDefault();
         const id = document.querySelector("#id-atualizar").value;
         const nome = document.querySelector("#nome-atualizar").value;
         const funcao = document.querySelector("#funcao-atualizar").value;
         const salario = Number(
             document.querySelector("#salario-atualizar").value
         );
+        const botaoCancelar = document.getElementById("cancelar-atualizar");
 
         const empregado = {
             nome,
@@ -127,16 +128,21 @@ const update = async (event) => {
             salario,
         };
 
-        console.log("event", event);
-        console.log("empregado", empregado);
-        if (!formAtualizar.checkValidity() && salario == 0) {
+        const formInvalid =
+            nome.length === 0 || funcao.length === 0 || salario === 0;
+        if (formInvalid) {
             event.preventDefault();
             event.stopPropagation();
 
-            formCadastrar.classList.add("was-validated");
+            formAtualizar.classList.add("was-validated");
         } else {
             await api.update(id, empregado);
             await findAll();
+            botaoCancelar.click();
+            id = "";
+            nome = "";
+            funcao = "";
+            salario = "";
         }
     } catch (error) {
         console.log("error", error);
@@ -145,7 +151,6 @@ const update = async (event) => {
 
 const deleteById = async (id) => {
     try {
-        console.log("deleteById", id);
         await api.deleteById(id);
         await findAll();
     } catch (error) {
@@ -154,5 +159,5 @@ const deleteById = async (id) => {
 };
 
 formCadastrar.addEventListener("submit", save);
-formAtualizar.addEventListener("click", update);
+formAtualizar.addEventListener("submit", update);
 findAll();

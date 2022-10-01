@@ -43,6 +43,7 @@
 
                     <div class="modal-body">
                         <form id="form-cadastrar" class="row g-3 needs-validation" novalidate>
+                            <input type="hidden" class="form-control" id="id-atualizar" required>
                             <div class="mb-3">
                                 <label for="nome" class="form-label">Nome</label>
                                 <input type="text" class="form-control" id="nome" required>
@@ -66,7 +67,7 @@
                             </div>
 
                             <div class="col-12 d-flex justify-content-between">
-                                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Fechar</button>
+                                <button class="btn btn-danger" type="button" data-bs-dismiss="modal" id="fechar">Fechar</button>
                                 <button class="btn btn-primary" type="submit">Salvar</button>
                             </div>
                         </form>
@@ -87,6 +88,8 @@
 
                     <div class="modal-body">
                         <form id="form-atualizar" class="row g-3 needs-validation" novalidate>
+                            <input type="hidden" class="form-control" id="id-atualizar" required>
+
                             <div class="mb-3">
                                 <label for="nome-atualizar" class="form-label">Nome</label>
                                 <input type="text" class="form-control" id="nome-atualizar" required>
@@ -110,7 +113,7 @@
                             </div>
 
                             <div class="col-12 d-flex justify-content-between">
-                                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-danger" type="button" data-bs-dismiss="modal" id="cancelar-atualizar">Cancelar</button>
                                 <button class="btn btn-primary" id="botao-atualizar">Salvar</button>
                             </div>
                         </form>
