@@ -6,47 +6,147 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <title>Trabalho Programação Script</title>
 </head>
 
 <body>
     <div class="container mt-5">
-        <h1 class="text-start">Empregados</h1>
+        <h1 class="text-center">Empregados</h1>
 
-        <table class="table table-dark table-striped">
+        <table class="table table-dark table-striped mt-5">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Função</th>
+                    <th scope="col">Salário</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+            <tbody class="table-body">
             </tbody>
         </table>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="./js/script.js" type="module"></script>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-cadastrar">
+            Adicionar
+        </button>
+
+        <div id="modal-cadastrar" class="modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h3 class="modal-title">Cadastrar</h3>
+                        <button class="btn btn-close" type="button" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="form-cadastrar" class="row g-3 needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nome" required>
+                                <div class="invalid-feedback">
+                                    O nome do empregado é obrigatório.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="funcao" class="form-label">Função</label>
+                                <input type="text" class="form-control" id="funcao" required>
+                                <div class="invalid-feedback">
+                                    A função do empregado é obrigatório.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="salario" class="form-label">Salário</label>
+                                <input type="number" class="form-control" id="salario" required>
+                                <div class="invalid-feedback">
+                                    O salário do empregado é obrigatório.
+                                </div>
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-between">
+                                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Fechar</button>
+                                <button class="btn btn-primary" type="submit">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-atualizar" class="modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h3 class="modal-title">Atualizar</h3>
+                        <button class="btn btn-close" type="button" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="form-atualizar" class="row g-3 needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="nome-atualizar" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nome-atualizar" required>
+                                <div class="invalid-feedback">
+                                    O nome do empregado é obrigatório.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="funcao-atualizar" class="form-label">Função</label>
+                                <input type="text" class="form-control" id="funcao-atualizar" required>
+                                <div class="invalid-feedback">
+                                    A função do empregado é obrigatório.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="salario-atualizar" class="form-label">Salário</label>
+                                <input type="number" class="form-control" id="salario-atualizar" required>
+                                <div class="invalid-feedback">
+                                    O salário do empregado é obrigatório.
+                                </div>
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-between">
+                                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-primary" id="botao-atualizar">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div id="modal-excluir" class="modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h3 class="modal-title">Excluir</h3>
+                        <button class="btn btn-close" type="button" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form>
+                            <p>Tem certeza que deseja excluir esse empregado?</p>
+
+                            <div class="d-flex justify-content-between botoes">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="./js/script.js" type="module"></script>
 </body>
 
 </html>
