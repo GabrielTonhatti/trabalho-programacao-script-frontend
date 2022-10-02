@@ -84,16 +84,27 @@ const save = async (event) => {
         event.preventDefault();
         const nome = document.querySelector("#nome");
         const funcao = document.querySelector("#funcao");
-        const salario =document.querySelector("#salario");
+        const salario = document.querySelector("#salario");
         const fechar = document.querySelector("#fechar");
 
         const empregado = {
             nome: nome.value,
             funcao: funcao.value,
-            salario:  Number(salario.value),
+            salario: Number(salario.value),
         };
 
-        if (!formCadastrar.checkValidity() && salario == 0) {
+        const formInvalid =
+            nome.length === 0 ||
+            nome.length === undefined ||
+            funcao.length === 0 ||
+            nome.length === undefined ||
+            salario === 0 ||
+            salario === undefined;
+        console.log("nome.length === 0", nome.length);
+        console.log("nome.length === 0", nome.length === 0);
+        console.log("funcao.length === 0", funcao.length === 0);
+        console.log("salario === 0", salario === 0);
+        if (formInvalid) {
             event.preventDefault();
             event.stopPropagation();
 
