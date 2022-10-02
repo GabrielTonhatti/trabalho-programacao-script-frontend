@@ -100,10 +100,6 @@ const save = async (event) => {
             nome.length === undefined ||
             salario === 0 ||
             salario === undefined;
-        console.log("nome.length === 0", nome.length);
-        console.log("nome.length === 0", nome.length === 0);
-        console.log("funcao.length === 0", funcao.length === 0);
-        console.log("salario === 0", salario === 0);
         if (formInvalid) {
             event.preventDefault();
             event.stopPropagation();
